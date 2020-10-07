@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public List<Tasks> tasks;
     private RecyclerView recyclerView;
     MainPresenter mainPresenter = new MainPresenter(this);
+    private static final int REQUEST_CODE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Intent fastTaskIntent = new Intent(MainActivity.this, FastAddTask.class);
-                startActivity(fastTaskIntent);
+                startActivityIfNeeded(fastTaskIntent, REQUEST_CODE);
             }
         });
 
@@ -73,6 +76,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);*/
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+          try {
+              mainPresenter.onPassTaskMainView();
+          }catch (Exception e){
+              e.printStackTrace();
+          }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //создание меню в Toolbar

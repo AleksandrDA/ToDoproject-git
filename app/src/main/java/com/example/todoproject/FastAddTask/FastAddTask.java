@@ -77,6 +77,8 @@ public class FastAddTask extends AppCompatActivity implements FastTaskContract.V
                     ftPresenter.onSaveTask(etNameTask);
                     etNameTask.getText().clear();
                     Log.d(TAG, "user did click");
+                    setResult(RESULT_OK);
+                    finish();
                 } else {
                     Toast toast = Toast.makeText(FastAddTask.this, R.string.et_text_input, Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
