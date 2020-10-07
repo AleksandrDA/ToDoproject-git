@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Intent fastTaskIntent = new Intent(MainActivity.this, FastAddTask.class);
-                startActivityIfNeeded(fastTaskIntent, REQUEST_CODE);
+                startActivityForResult(fastTaskIntent, REQUEST_CODE);
             }
         });
 
